@@ -8,6 +8,7 @@ form.addEventListener("submit", async (event) => {
     const password = formData.get("password");
     const first_name = formData.get("first_name");
     const second_name = formData.get("second_name");
+    const captcha = formData.get("captcha");
 
     if(!email || !password || !first_name || !second_name){
         alert("Please fill in all fields from JS");
@@ -51,6 +52,7 @@ form.addEventListener("submit", async (event) => {
         });
         const message = await response.text();
         alert(message);
+        window.location.href="index.html";
        
     } catch (error){
         console.error("Fetch failed:", error);

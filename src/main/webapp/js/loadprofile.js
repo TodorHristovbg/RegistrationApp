@@ -1,6 +1,10 @@
 
 document.addEventListener("DOMContentLoaded", loadprofile);
 
+window.addEventListener("pageshow", function () {
+    loadprofile();
+});
+
 async function loadprofile() {
     try {
         const response = await fetch("loadprofile");
@@ -8,8 +12,12 @@ async function loadprofile() {
         console.log("Status:", response.status);
 
         if (response.status === 401) {
+            document.getElementById("first_name").value = "";
+            document.getElementById("second_name").value = "";
+            document.getElementById("email").value = "";
+
             alert("Login first");
-            window.location.href = "Login.html"; 
+            window.location.replace("Login.html");
             return;
         }
 
@@ -39,9 +47,7 @@ async function changefirstname() {
    if(!new_first_name){
     alert("Please enter a name before attempting to change");
     return;
-   } else {
-    alert(new_first_name);
-   }
+   } 
 
     try{
         const formData = new URLSearchParams();
@@ -74,9 +80,7 @@ async function changesecondname() {
    if(!new_second_name){
     alert("Please enter a name before attempting to change");
      return;
-   } else {
-    alert(new_second_name);
-   }
+   } 
 
     try{
         const formData = new URLSearchParams();
@@ -114,9 +118,7 @@ async function changepassword() {
     alert("Passwords must match");
      return;
    }
-   else {
-    alert(new_password);
-   }
+  
 
     try{
         const formData = new URLSearchParams();
@@ -145,9 +147,9 @@ async function changepassword() {
 }
 
 async function logout(){
-    alert("attempting log out");
     const response = await fetch("logout", {
            method: "POST",
+           cache: "no-store"
     });
     if(response.ok){
         window.location.href="index.html";

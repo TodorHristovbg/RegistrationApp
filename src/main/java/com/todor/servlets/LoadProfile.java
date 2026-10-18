@@ -34,6 +34,9 @@ public class LoadProfile extends HttpServlet {
      ) throws IOException {
           response.setContentType("text/plain");
           response.setCharacterEncoding("UTF-8");
+          response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+          response.setHeader("Pragma", "no-cache");
+          response.setDateHeader("Expires", 0);
           var out = response.getWriter();
           
           
