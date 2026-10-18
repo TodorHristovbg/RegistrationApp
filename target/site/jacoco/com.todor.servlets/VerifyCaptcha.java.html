@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VerifyCaptcha.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">registration-app</a> &gt; <a href="index.source.html" class="el_package">com.todor.servlets</a> &gt; <span class="el_source">VerifyCaptcha.java</span></div><h1>VerifyCaptcha.java</h1><pre class="source lang-java linenums">package com.todor.servlets;
+
+import java.io.IOException;
+
+
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+
+
+@WebServlet(&quot;/verifycaptcha&quot;)
+<span class="fc" id="L14">public class VerifyCaptcha extends HttpServlet {</span>
+
+    @Override
+    protected void doPost(
+            HttpServletRequest request,
+            HttpServletResponse response
+     ) throws IOException {
+
+<span class="fc" id="L22">        Object captcha = request.getParameter(&quot;captcha&quot;);</span>
+
+<span class="fc bfc" id="L24" title="All 4 branches covered.">        if (captcha==null || !captcha.equals(&quot;secretpassword&quot;)) {</span>
+<span class="fc" id="L25">            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);</span>
+<span class="fc" id="L26">            response.getWriter().println(&quot;Incorrect captcha&quot;);</span>
+<span class="fc" id="L27">            return;</span>
+        }
+
+<span class="fc" id="L30">        response.setStatus(HttpServletResponse.SC_OK);</span>
+
+<span class="fc" id="L32">     }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

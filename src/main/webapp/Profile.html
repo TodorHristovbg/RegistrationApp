@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+   <h1> HELLO USER !</h1>
+
+   <h1>First Name</h>
+   <input type="text" id="first_name" name="first_name">
+   <button onclick="changefirstname()"> Change First Name </button>
+   <h1>Second Name</h>
+   <input type="text" id="second_name" name="second_name">
+   <button onclick="changesecondname()"> Change Second Name </button>
+   <p id="email" name="email"></p>
+
+   <input type="password" id="password" name="password" placeholder="Enter new password">
+   <input type="password" id="password2" name="password2" placeholder="Confirm new password">
+   <button onclick="changepassword()"> Change password</button>
+
+   <br>
+   <button onclick="logout()"> Log out</button>
+   <script src="js/loadprofile.js" defer></script>
+
+</body>
+</html>

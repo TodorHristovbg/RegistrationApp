@@ -1,0 +1,8 @@
+com\todor\RegisterServletTest.class
+com\todor\VerifyCaptchaTest.class
+com\todor\LoadProfileServletTest.class
+com\todor\UpdateSecondNameTest.class
+com\todor\LoginServletTest.class
+com\todor\LogoutServletTest.class
+com\todor\UpdatePasswordTest.class
+com\todor\UpdateFirstNameTest.class

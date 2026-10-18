@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoadProfile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">registration-app</a> &gt; <a href="index.source.html" class="el_package">com.todor.servlets</a> &gt; <span class="el_source">LoadProfile.java</span></div><h1>LoadProfile.java</h1><pre class="source lang-java linenums">package com.todor.servlets;
+import com.todor.db.*;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Map;
+
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+
+@WebServlet(&quot;/loadprofile&quot;)
+public class LoadProfile extends HttpServlet {
+     
+     private final MyUserRepository userRepository;
+
+    public LoadProfile() {
+<span class="nc" id="L23">    this(new MyUserRepository());</span>
+<span class="nc" id="L24">    }</span>
+
+<span class="fc" id="L26">    public LoadProfile(MyUserRepository userRepository) {</span>
+<span class="fc" id="L27">    this.userRepository = userRepository;</span>
+<span class="fc" id="L28">    }</span>
+
+    @Override
+    protected void doGet(
+            HttpServletRequest request,
+            HttpServletResponse response
+     ) throws IOException {
+<span class="fc" id="L35">          response.setContentType(&quot;text/plain&quot;);</span>
+<span class="fc" id="L36">          response.setCharacterEncoding(&quot;UTF-8&quot;);</span>
+<span class="fc" id="L37">          var out = response.getWriter();</span>
+          
+          
+<span class="fc" id="L40">          HttpSession session = request.getSession(false);</span>
+<span class="fc bfc" id="L41" title="All 6 branches covered.">          if(session == null || session.getAttribute(&quot;userId&quot;) == null || (Integer)session.getAttribute(&quot;userId&quot;)&lt;=0) {</span>
+<span class="fc" id="L42">               response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);</span>
+<span class="fc" id="L43">               out.println(&quot;Login first&quot;);</span>
+<span class="fc" id="L44">               return;</span>
+          }
+<span class="fc" id="L46">          int userid = (Integer) session.getAttribute(&quot;userId&quot;);</span>
+          try{
+<span class="fc" id="L48">          Class.forName(&quot;org.postgresql.Driver&quot;);</span>
+
+          try{
+<span class="fc" id="L51">               User user = userRepository.findUserById(userid);</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">               if(user==null){</span>
+<span class="fc" id="L53">                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);</span>
+<span class="fc" id="L54">                    out.println(&quot;User not found&quot;);</span>
+<span class="fc" id="L55">                    return;</span>
+               }
+
+<span class="fc" id="L58">               response.setContentType(&quot;application/json&quot;);</span>
+<span class="fc" id="L59">               response.setCharacterEncoding(&quot;UTF-8&quot;);</span>
+<span class="fc" id="L60">               response.setStatus(HttpServletResponse.SC_OK);</span>
+                    
+<span class="fc" id="L62">               ObjectMapper mapper = new ObjectMapper();</span>
+<span class="fc" id="L63">               Map&lt;String,String&gt; profile = Map.of(</span>
+<span class="fc" id="L64">               &quot;first_name&quot;, user.getFirstName(),</span>
+<span class="fc" id="L65">               &quot;second_name&quot;, user.getSecondName(),</span>
+<span class="fc" id="L66">               &quot;email&quot;, user.getEmail()</span>
+               );
+<span class="fc" id="L68">               mapper.writeValue(out, profile);</span>
+<span class="fc" id="L69">               return;</span>
+<span class="fc" id="L70">          } catch (SQLException e){</span>
+<span class="fc" id="L71">          response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);</span>
+<span class="fc" id="L72">          out.println(&quot;Could not load profile&quot;);</span>
+        }
+<span class="nc" id="L74">     } catch (Exception e){</span>
+<span class="nc" id="L75">          response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);</span>
+<span class="nc" id="L76">          out.println(&quot;Could not load profile&quot;);</span>
+<span class="fc" id="L77">     }</span>
+<span class="fc" id="L78">     }</span>
+}    
+
+   
+
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

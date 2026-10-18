@@ -1,0 +1,22 @@
+package com.todor;
+
+import com.todor.db.MyUserRepository;
+import com.todor.servlets.UpdateFirstName;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+class TestableUpdateFirstName extends UpdateFirstName {
+
+   TestableUpdateFirstName(MyUserRepository userRepository) {
+        super(userRepository);
+    }
+
+
+    void callDoPost(
+      HttpServletRequest request,
+            HttpServletResponse response
+     ) throws IOException {
+        super.doPost(request, response);
+     }
+}
